@@ -12,21 +12,21 @@ namespace CircleChannel
         Left,
         Right
     }
-    
+
     public partial class RoundChannel : UserControl, IProvider
     {
         private const double CenterX = 150;
         private const double CenterY = 150;
         private const double Radius = 30;
-
-        private double _startAngle = 0;
-        private double _endAngle = 90;
+        private const double Standard = 90;
 
         private const float IncreaseRatio = 1.0f;
         private const float DecreaseRatio = -1.0f;
-        
-        private int LeftBoundAngle = 230;
-        private int RightBoundAngle = -60;
+
+        private const int LeftBoundAngle = 270;
+        private const int RightBoundAngle = -90;
+
+        private readonly SolidColorBrush _penBrush = new SolidColorBrush(Color.FromArgb(125, 209, 209, 210));
                 
         public Brush Brush { get; set; }
         public Pen Pen { get; set; }
@@ -50,22 +50,31 @@ namespace CircleChannel
             BgEllipse.SetValue(Canvas.LeftProperty, CenterX - Radius);
             BgEllipse.SetValue(Canvas.TopProperty, CenterY  - Radius);
             
+            this.PreviewMouseDoubleClick += OnPreviewMouseDoubleClick;
+            
             CenterPoint.SetValue(Canvas.LeftProperty, CenterX);
             CenterPoint.SetValue(Canvas.TopProperty, CenterY);
                         
             InitProvider();
             ArcView.provider = this;
         }
-        
+
+        private void OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            StartAngle = Standard;
+            EndAngle = Standard;
+            UpdateView();
+        }
+
         private void InitProvider()
         {
             Brush = Brushes.Transparent;
             //Brush = new SolidColorBrush(Color.FromArgb(255 ,17, 18, 19));
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(125,209, 209, 210)), 7.0);
+            Pen = new Pen(_penBrush, 7.0);
 
             Position = new Point(CenterX, CenterY);
-            StartAngle = _startAngle;
-            EndAngle = _endAngle;
+            StartAngle = Standard;
+            EndAngle = Standard;
             RadiusX = Radius;
             RadiusY = Radius;
 
@@ -95,17 +104,20 @@ namespace CircleChannel
                     //左
                     if (valueOffset > 0)
                     {
-                        UpdateView(IncreaseRatio, Direction.Left);
+                        UpdateRatioView(IncreaseRatio, Direction.Left);
                     }
                     //右
                     else
                     {
-                        UpdateView(DecreaseRatio, Direction.Right);
+                        UpdateRatioView(DecreaseRatio, Direction.Right);
                     }
-                    
-                    ArcView.InvalidateVisual();
                 }
             }
+        }
+
+        private void UpdateView()
+        {
+            ArcView.InvalidateVisual();
         }
 
         private void BgEllipse_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -117,28 +129,30 @@ namespace CircleChannel
             }
         }
 
-        private void UpdateView(float changeRatio, Direction direction)
+        private void UpdateRatioView(float changeRatio, Direction direction)
         {
-            if (EndAngle > 90 && Math.Abs(StartAngle - 90) == 0)
+            if (EndAngle > Standard && Math.Abs(StartAngle - Standard) == 0)
             {
-                EndAngle = Math.Max(Math.Min(LeftBoundAngle, EndAngle + changeRatio), 90);
+                EndAngle = Math.Max(Math.Min(LeftBoundAngle, EndAngle + changeRatio), Standard);
             }
-            else if(Math.Abs(EndAngle - 90) == 0 && StartAngle < 90)
+            else if(Math.Abs(EndAngle - Standard) == 0 && StartAngle < Standard)
             {
                 StartAngle =
-                    Math.Min(Math.Max(RightBoundAngle, StartAngle + changeRatio), 90);
+                    Math.Min(Math.Max(RightBoundAngle, StartAngle + changeRatio), Standard);
             }
-            else if (Math.Abs(StartAngle - 90) == 0 && Math.Abs(EndAngle - 90) == 0)
+            else if (Math.Abs(StartAngle - Standard) == 0 && Math.Abs(EndAngle - Standard) == 0)
             {
                 if (direction == Direction.Left)
                 {
-                    EndAngle = Math.Max(Math.Min(LeftBoundAngle, EndAngle + changeRatio), 90);
+                    EndAngle = Math.Max(Math.Min(LeftBoundAngle, EndAngle + changeRatio), Standard);
                 }
                 else
                 {
-                    StartAngle = Math.Min(Math.Max(RightBoundAngle, StartAngle + changeRatio), 90);
+                    StartAngle = Math.Min(Math.Max(RightBoundAngle, StartAngle + changeRatio), Standard);
                 }
             }
+            
+            UpdateView();
         }
     }
 }
