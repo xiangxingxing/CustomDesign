@@ -4,6 +4,9 @@ using System.Windows.Media;
 
 namespace CircleChannel
 {
+    /// <summary>
+    /// https://github.com/helix-toolkit/helix-toolkit
+    /// </summary>
     public static class DrawingContextExtensions
     {
         /// <summary>
