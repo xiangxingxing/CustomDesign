@@ -7,37 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <local:ValueAngleConverter x:Key="valueAngleConverter"/>
-        <local:ValueTextConverter x:Key="valueTextConverter"/>
+        <local:ValueAngleConverter x:Key="valueAngleConverter" />
+        <local:ValueTextConverter x:Key="valueTextConverter" />
     </Window.Resources>
-     <Grid>
-         <Grid.RowDefinitions>
-             <RowDefinition/>
-             <RowDefinition/>
-         </Grid.RowDefinitions>
-         <Grid Grid.Row="1">
-             <TextBlock Width="80" Height="40" Foreground="Aqua" Text="{Binding ElementName=knob, Path=Value}"/>
-         </Grid>
-         <Slider Grid.Row="0" Name="knob" Maximum="100" Minimum="0">
+    <Grid>
+        <Slider Name="knob">
             <Slider.Template>
                 <ControlTemplate>
                     <Viewbox>
-                        <Canvas Width="300" Height="300" Margin="5" >
-                            <Ellipse Fill="#111213" Width="300" Height="300" Canvas.Left="0" Canvas.Top="0" 
-                Stroke="DarkGray" StrokeThickness="10"
-                MouseLeftButtonDown="Ellipse_MouseLeftButtonDown"
-                MouseMove="Ellipse_MouseMove"
-                MouseLeftButtonUp="Ellipse_MouseLeftButtonUp"/>
+                        <Canvas Width="300" Height="300" Margin="5">
+                            <Ellipse Fill="LightBlue" Width="300" Height="300" Canvas.Left="0" Canvas.Top="0"
+                                     Stroke="Black" StrokeThickness="10"
+                                     MouseLeftButtonUp="Ellipse_MouseLeftButtonUp"
+                                     MouseMove="Ellipse_MouseMove" />
+                            <Ellipse Fill="Black" Width="60" Height="60" Canvas.Left="120" Canvas.Top="120" />
                             <Canvas>
-                                <Line Stroke="#D1D1D2" StrokeThickness="5" X1="150" Y1="150" X2="150" Y2="10"
-                                      MouseLeftButtonUp="Ellipse_MouseLeftButtonUp"/>
+                                <Line Stroke="Red" StrokeThickness="5" X1="150" Y1="150" X2="150" Y2="10"
+                                      MouseLeftButtonUp="Ellipse_MouseLeftButtonUp" />
+                                <Ellipse Fill="Red" Width="20" Height="20" Canvas.Left="140" Canvas.Top="0"
+                                         MouseLeftButtonDown="Ellipse_MouseLeftButtonDown"
+                                         MouseLeftButtonUp="Ellipse_MouseLeftButtonUp">
+                                    <Ellipse.ToolTip>
+                                        <ToolTip>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                     Path="Value" Converter="{StaticResource valueTextConverter}" />
+                                        </ToolTip>
+                                    </Ellipse.ToolTip>
+                                </Ellipse>
                                 <Canvas.RenderTransform>
                                     <RotateTransform CenterX="150" CenterY="150">
                                         <RotateTransform.Angle>
                                             <MultiBinding Converter="{StaticResource valueAngleConverter}">
-                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value"/>
-                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Minimum"/>
-                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Minimum" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum" />
                                             </MultiBinding>
                                         </RotateTransform.Angle>
                                     </RotateTransform>

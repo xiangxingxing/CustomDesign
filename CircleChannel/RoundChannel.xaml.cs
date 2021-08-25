@@ -15,9 +15,9 @@ namespace CircleChannel
 
     public partial class RoundChannel : UserControl, IProvider
     {
-        private const double CenterX = 150;
-        private const double CenterY = 150;
-        private const double Radius = 30;
+        private const double CenterX = 13;
+        private const double CenterY = 13;
+        private const double Radius = 13;
         private const double Standard = 90;
 
         private const float IncreaseRatio = 1.0f;
@@ -35,8 +35,73 @@ namespace CircleChannel
         public double EndAngle { get; set; }
         public double RadiusX { get; set; }
         public double RadiusY { get; set; }
-        public bool LeftArea { get; set; }
+
+        public double RotateAngle
+        {
+            get => (double) this.GetValue(RotateAngleProperty);
+            set => this.SetValue(RotateAngleProperty, value);
+        }
+
+        public static readonly DependencyProperty RotateAngleProperty =
+            DependencyProperty.Register("RotateAngle", typeof(double), typeof(RoundChannel), new PropertyMetadata(0.0));
+
         
+        public string PanText
+        {
+            get => (string) this.GetValue(PanTextProperty);
+            set => this.SetValue(PanTextProperty, value);
+        }
+
+        public static readonly DependencyProperty PanTextProperty =
+            DependencyProperty.Register("PanText", typeof(string), typeof(RoundChannel), new PropertyMetadata(""));
+
+        public double Pan
+        {
+            get => (double) this.GetValue(PanProperty);
+            set => this.SetValue(PanProperty, value);
+        }
+
+        public static readonly DependencyProperty PanProperty =
+            DependencyProperty.Register("Pan", typeof(double), typeof(RoundChannel), new PropertyMetadata(0.0, OnPanValueChanged));
+
+        private static void OnPanValueChanged(DependencyObject dp,
+            DependencyPropertyChangedEventArgs args)
+        {
+            var newPan = (double)args.NewValue;
+            ((RoundChannel) dp).PanPropertyChanged(newPan);
+        }
+        
+        private void PanPropertyChanged(double newPan)
+        {
+            if (_isLeftMouseDown)
+            {
+                return;
+            }
+            PanValueToAngle(newPan);
+            UpdateView();
+        }
+
+        private void PanValueToAngle(double newPan)
+        {
+            const int allAngle = LeftBoundAngle - RightBoundAngle;
+            var allLen = Maximum - Minimum;
+            if (newPan > 0)
+            {
+                EndAngle = Standard;
+                var angle = (int)((newPan - (Maximum + Minimum) / 2) / allLen * allAngle);
+                StartAngle = Standard - angle;
+            }
+            else
+            {
+                StartAngle = Standard;
+                var angle = (int)(((Maximum + Minimum) / 2 - newPan) / allLen * allAngle);
+                EndAngle = Standard + angle;
+            } 
+        }
+        
+        public double Maximum { get; set; }
+        public double Minimum { get; set; }
+
         public RoundChannel()
         {
             InitializeComponent();
@@ -69,7 +134,6 @@ namespace CircleChannel
         private void InitProvider()
         {
             Brush = Brushes.Transparent;
-            //Brush = new SolidColorBrush(Color.FromArgb(255 ,17, 18, 19));
             Pen = new Pen(_penBrush, 7.0);
 
             Position = new Point(CenterX, CenterY);
@@ -77,8 +141,6 @@ namespace CircleChannel
             EndAngle = Standard;
             RadiusX = Radius;
             RadiusY = Radius;
-
-            LeftArea = true;
         }
         
         private Point _startPoint;
@@ -115,11 +177,6 @@ namespace CircleChannel
             }
         }
 
-        private void UpdateView()
-        {
-            ArcView.InvalidateVisual();
-        }
-
         private void BgEllipse_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (_isLeftMouseDown)
@@ -153,6 +210,39 @@ namespace CircleChannel
             }
             
             UpdateView();
+        }
+        
+        
+        private void UpdateView()
+        {
+            AngleToPanValue();
+            ArcView.InvalidateVisual();
+        }
+
+        private void AngleToPanValue()
+        {
+            const int allAngle = LeftBoundAngle - RightBoundAngle;
+            var allLen = Maximum - Minimum;
+            
+            var angle = Math.Abs(StartAngle - EndAngle);
+
+            if (StartAngle < Standard && Math.Abs(EndAngle - Standard) == 0)
+            {
+                Pan = allLen * angle / allAngle;
+                PanText = $"R {Pan:0.00}";
+                RotateAngle = Standard - StartAngle;
+            }
+            else if (EndAngle > Standard && Math.Abs(StartAngle - Standard) == 0)
+            {
+                Pan = - allLen * angle / allAngle;
+                PanText = $"L {Math.Abs(Pan):0.00}";
+                RotateAngle = Standard - EndAngle;
+            }
+            else if (Math.Abs(EndAngle - Standard) == 0 && Math.Abs(StartAngle - Standard) == 0)
+            {
+                PanText = "0.00";
+                RotateAngle = 0;
+            }
         }
     }
 }

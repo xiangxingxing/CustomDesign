@@ -13,8 +13,6 @@ namespace CircleChannel
         double EndAngle { get; set; }
         double RadiusX { get; set; }
         double RadiusY { get; set; }
-        
-        bool LeftArea { get; set; }
     }
     
     // public class ArcProvider : IProvider

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CircleChannel"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
-    <Grid>
-        <local:RoundChannel/>
+    <Grid Background="#282C30">
+        <local:RoundChannel Width="30" Height="30"/>
     </Grid>
 </Window>
