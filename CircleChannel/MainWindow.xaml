@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:CircleChannel"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
-    <Grid Background="#282C30">
-        <local:RoundChannel Width="30" Height="30"/>
-    </Grid>
+   <Grid Background="#282C30" >
+       <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+           <local:RoundChannel x:Name="SoundChannel" Width="26" Height="26" Margin="0 0 0 10"
+                               Maximum="1" Minimum="-1"/>
+           <TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=SoundChannel, Path=PanText}" FontSize="10" Foreground="#B3B3B3" />
+       </StackPanel>
+   </Grid>
 </Window>
