@@ -54,7 +54,7 @@ namespace CircleChannel
         }
 
         public static readonly DependencyProperty PanTextProperty =
-            DependencyProperty.Register("PanText", typeof(string), typeof(RoundChannel), new PropertyMetadata(""));
+            DependencyProperty.Register("PanText", typeof(string), typeof(RoundChannel), new PropertyMetadata("0.00"));
 
         public double Pan
         {
