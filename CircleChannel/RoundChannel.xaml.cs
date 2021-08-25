@@ -18,6 +18,7 @@ namespace CircleChannel
         private const double CenterX = 13;
         private const double CenterY = 13;
         private const double Radius = 13;
+        private const double BorderRadius = 16;
         private const double Standard = 90;
 
         private const float IncreaseRatio = 1.0f;
@@ -114,6 +115,11 @@ namespace CircleChannel
             BgEllipse.Height = 2 * Radius;
             BgEllipse.SetValue(Canvas.LeftProperty, CenterX - Radius);
             BgEllipse.SetValue(Canvas.TopProperty, CenterY  - Radius);
+            
+            BorderEllipse.Width = 2 * BorderRadius;
+            BorderEllipse.Height = 2 * BorderRadius;
+            BorderEllipse.SetValue(Canvas.LeftProperty, CenterX - BorderRadius);
+            BorderEllipse.SetValue(Canvas.TopProperty, CenterY  - BorderRadius);
             
             this.PreviewMouseDoubleClick += OnPreviewMouseDoubleClick;
             

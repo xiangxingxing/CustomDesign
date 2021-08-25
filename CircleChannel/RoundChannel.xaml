@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="30" d:DesignWidth="30">
     <Canvas x:Name="BgCanvas" Background="#282C30">
+        <Ellipse x:Name="BorderEllipse" Fill="#383B3E" />
         <local:ArcPath x:Name="ArcView"/>
         <Ellipse x:Name="BgEllipse" Fill="#111213" Cursor="SizeWE"/>
         <Ellipse x:Name="CenterPoint" Fill="Red" Width="2" Height="2"/>
