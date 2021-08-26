@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfAppli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleChannel", "CircleChannel\CircleChannel.csproj", "{C514F2CE-4A53-4E30-A458-BFAB625D58EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpOperation", "HttpOperation\HttpOperation.csproj", "{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{C514F2CE-4A53-4E30-A458-BFAB625D58EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C514F2CE-4A53-4E30-A458-BFAB625D58EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C514F2CE-4A53-4E30-A458-BFAB625D58EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
