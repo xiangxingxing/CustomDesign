@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,13 +6,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace HttpOperation
 {
     public interface IHttpService
     {
-        Task PostResponseAsync(string url, LyricRequestBody parameters, string cookie,
+        Task PostResponseAsync<T>(string url, T parameters, string cookie,
             CancellationToken cancellationToken,
             string version = null, HttpStatusCode expectedStatusCode = HttpStatusCode.OK);
     }
@@ -28,8 +26,12 @@ namespace HttpOperation
             TimeoutSeconds = timeoutSeconds;
         }
 
-        public async Task PostResponseAsync(string url,
-            LyricRequestBody parameters, string cookie, CancellationToken cancellationToken,
+        public HttpService()
+        {
+        }
+
+        public async Task PostResponseAsync<T>(string url,
+            T parameters, string cookie, CancellationToken cancellationToken,
             string version = null, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var response = await PostResponseAsync(url, parameters, cookie, cancellationToken, version, true,
@@ -37,8 +39,8 @@ namespace HttpOperation
             await response.Content.ReadAsStringAsync();
         }
 
-        private async Task<HttpResponseMessage> PostResponseAsync(string url,
-            LyricRequestBody parameters, string cookie, CancellationToken cancellationToken,
+        private async Task<HttpResponseMessage> PostResponseAsync<T>(string url,
+            T parameters, string cookie, CancellationToken cancellationToken,
             string version = null, bool useApplicationJson = false,
             HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
@@ -77,12 +79,14 @@ namespace HttpOperation
             if (Client != null) return Client;
             Client = new HttpClient
             {
-                Timeout = TimeSpan.FromSeconds(TimeoutSeconds)
+                //Timeout = TimeSpan.FromSeconds(TimeoutSeconds)
+                Timeout = Timeout.InfiniteTimeSpan
             };
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(
                 MediaTypeWithQualityHeaderValue.Parse($"application/json{version}"));
             Client.DefaultRequestHeaders.Add("Cookie", cookie);
+            //Client.DefaultRequestHeaders.Connection.Add("close");
             Client.DefaultRequestHeaders.Connection.Add("keep-alive");
             return Client;
         }

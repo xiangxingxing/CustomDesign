@@ -248,6 +248,7 @@ namespace CircleChannel
             {
                 PanText = "0.00";
                 RotateAngle = 0;
+                Pan = 0.00;// update binding
             }
         }
     }
