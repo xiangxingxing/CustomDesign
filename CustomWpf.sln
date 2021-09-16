@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleChannel", "CircleChan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpOperation", "HttpOperation\HttpOperation.csproj", "{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlOperation", "HtmlOperation\HtmlOperation.csproj", "{03D3593B-9140-485C-8C06-EC7442333778}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9884B9A3-A02E-431B-A5E0-B28DDB94E7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D3593B-9140-485C-8C06-EC7442333778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D3593B-9140-485C-8C06-EC7442333778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D3593B-9140-485C-8C06-EC7442333778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D3593B-9140-485C-8C06-EC7442333778}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -21,11 +21,11 @@ namespace CircleChannel
         private const double BorderRadius = 16;
         private const double Standard = 90;
 
-        private const float IncreaseRatio = 1.0f;
+        private const float IncreaseRatio = 1.0f;//speed
         private const float DecreaseRatio = -1.0f;
 
-        private const int LeftBoundAngle = 270;
-        private const int RightBoundAngle = -90;
+        private const int LeftBoundAngle = 240;
+        private const int RightBoundAngle = -60;
 
         private readonly SolidColorBrush _penBrush = new SolidColorBrush(Color.FromArgb(125, 209, 209, 210));
                 
@@ -116,10 +116,11 @@ namespace CircleChannel
             BgEllipse.SetValue(Canvas.LeftProperty, CenterX - Radius);
             BgEllipse.SetValue(Canvas.TopProperty, CenterY  - Radius);
             
-            BorderEllipse.Width = 2 * BorderRadius;
-            BorderEllipse.Height = 2 * BorderRadius;
-            BorderEllipse.SetValue(Canvas.LeftProperty, CenterX - BorderRadius);
-            BorderEllipse.SetValue(Canvas.TopProperty, CenterY  - BorderRadius);
+            // BorderEllipse.Width = 2 * BorderRadius;
+            // BorderEllipse.Height = 2 * BorderRadius;
+            // BorderEllipse.SetValue(Canvas.LeftProperty, CenterX - BorderRadius);
+            // BorderEllipse.SetValue(Canvas.TopProperty, CenterY  - BorderRadius);
+            InitOutline();
             
             this.PreviewMouseDoubleClick += OnPreviewMouseDoubleClick;
             
@@ -128,6 +129,26 @@ namespace CircleChannel
                         
             InitProvider();
             ArcView.provider = this;
+        }
+
+        private void InitOutline()
+        {
+            RightOutline.provider = new OutlineProvider(BorderRadius)
+            {
+                Position = new Point(CenterX, CenterY),
+                StartAngle = RightBoundAngle,
+                EndAngle = Standard
+            };
+            RightOutline.InvalidateVisual();
+
+            LeftOutline.provider = new OutlineProvider(BorderRadius)
+            {
+                Position = new Point(CenterX, CenterY),
+                StartAngle = Standard,
+                EndAngle = LeftBoundAngle
+            };
+
+            LeftOutline.InvalidateVisual();
         }
 
         private void OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
