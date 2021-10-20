@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -18,9 +16,9 @@ namespace HtmlOperation
         {
             InitializeComponent();
             
-            //this.Loaded += OnMainWinLoaded;
+            this.Loaded += OnMainWinLoaded;
             
-            Tbx.Text = DateTime.Today.ToString("yyyy.MM.dd");
+            //Tbx.Text = DateTime.Today.ToString("yyyy.MM.dd");
         }
 
         //version: eg. 1.7.1  2.0.0
@@ -29,42 +27,50 @@ namespace HtmlOperation
         private void OnMainWinLoaded(object sender, RoutedEventArgs e)
         {
             var rows = new List<List<string>>();
-            var web = new HtmlWeb();
-            var doc = web.Load("http://www.mufap.com.pk/payout-report.php?tab=01");
-            var i = 0;
-            foreach (HtmlNode table in doc.DocumentNode.SelectNodes("//table"))
-            {   
-                foreach (HtmlNode row in table.SelectNodes("tr"))
-                {
-                    var temprow = new List<string>();
-                    foreach (HtmlNode cell in row.SelectNodes("td"))
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                var web = new HtmlWeb();
+                var doc = web.Load("https://singer.xiaoice.com/updatelog");
+                var i = 0;
+                foreach (HtmlNode table in doc.DocumentNode.SelectNodes("//table"))
+                {   
+                    foreach (HtmlNode row in table.SelectNodes("tr"))
                     {
-                        temprow.Add(cell.InnerText);
+                        var temprow = new List<string>();
+                        foreach (HtmlNode cell in row.SelectNodes("td"))
+                        {
+                            temprow.Add(cell.InnerText);
+                        }
+                        rows.Add(temprow);
                     }
-                    rows.Add(temprow);
+
+                    i++;
+                    if (i == 3)
+                    {
+                        break;
+                    }
                 }
 
-                i++;
-                if (i == 3)
+                foreach (var row in rows)
                 {
-                    break;
+                    var tmpStr = "";
+                    foreach (var r in row)
+                    {
+                        if (_regex.IsMatch(r))
+                        {
+                            continue;
+                        }
+                        tmpStr += r;
+                    }
+
+                    tmpStr += "\n";
+                    Box.Text += tmpStr;
                 }
             }
-
-            foreach (var row in rows)
+            catch (Exception ex)
             {
-                var tmpStr = "";
-                foreach (var r in row)
-                {
-                    if (_regex.IsMatch(r))
-                    {
-                        continue;
-                    }
-                    tmpStr += r;
-                }
-
-                tmpStr += "\n";
-                Box.Text += tmpStr;
+                Tbx.Text = ex.Message;
             }
         }
     }
