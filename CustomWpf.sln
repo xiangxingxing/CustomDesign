@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpOperation", "HttpOperat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlOperation", "HtmlOperation\HtmlOperation.csproj", "{03D3593B-9140-485C-8C06-EC7442333778}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetronomeDemo", "MetronomeDemo\MetronomeDemo.csproj", "{B89EE428-8180-4719-9CBF-9B699A6D34AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{03D3593B-9140-485C-8C06-EC7442333778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03D3593B-9140-485C-8C06-EC7442333778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03D3593B-9140-485C-8C06-EC7442333778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B89EE428-8180-4719-9CBF-9B699A6D34AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B89EE428-8180-4719-9CBF-9B699A6D34AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B89EE428-8180-4719-9CBF-9B699A6D34AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B89EE428-8180-4719-9CBF-9B699A6D34AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
